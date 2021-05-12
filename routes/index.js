@@ -23,11 +23,12 @@ router.get('/', function(req, res, next) {
     }
   });
 
-  // res.render('index', { title: 'Express' })
 });
  router.post('/', function(req, res, next) {
    // console.log(req.body.userid)
    database.collection("history").find({"userid":req.body.userid}).sort({$natural: 1}).toArray(function (error, data) {
+     res.setHeader( 'Access-Control-Allow-Headers', 'Accept,Accept-Language,Content-Language,Content-Type');
+
      console.log(data);
      if(data.length === 0 ){
        database.collection("history").insertOne({"userid":req.body.userid, "index":1, "col": 1 })
